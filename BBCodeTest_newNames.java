@@ -28,7 +28,7 @@ public class BBCodeTest {
 
 
     @Test
-      public void boldBbCodeTagsTwoSymbolsString_ShouldPass() throws Exception {
+      public void boldBbCodeWithMinAllowedTextLength_ShouldPas() throws Exception {
         Users.signUpAndSignIn();
         String newText = randomAlphanumeric(2);
         Topic topic = new Topic("subject","[b]" + newText + "[/b]");
@@ -37,7 +37,7 @@ public class BBCodeTest {
     }
 
     @Test
-    public void boldBbCodeTagsTwentyThousandSymbolsString_ShouldPass() throws Exception {
+    public void boldBbCodeWithMaxAllowedTextLength_ShouldPas() throws Exception {
         Users.signUpAndSignIn();
         String newText = randomAlphanumeric(20000);
         Topic topic = new Topic("subject","[b]" + newText + "[/b]");
@@ -46,7 +46,7 @@ public class BBCodeTest {
     }
 
     @Test
-    public void openBoldBbCodeTagString_ShouldPass() throws Exception {
+    public void openBoldBbCodeTag_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic("subject","[b]");
         Topic createdTopic = Topics.createTopic(topic);
@@ -54,7 +54,7 @@ public class BBCodeTest {
     }
 
     @Test
-    public void closeBoldBbCodeTagString_ShouldPass() throws Exception {
+    public void closeBoldBbCodeTag_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic("subject","[/b]");
         Topic createdTopic = Topics.createTopic(topic);
@@ -62,7 +62,7 @@ public class BBCodeTest {
     }
 
     @Test
-    public void boldBbCodeTagsTenSymbolsString_ShouldPass() throws Exception {
+    public void boldBbCodeTenSymbolsText_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         String newText = randomAlphanumeric(10);
         Topic topic = new Topic("subject","[b]" + newText + "[/b]");
@@ -72,7 +72,7 @@ public class BBCodeTest {
 
     @Test(enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
-     public void emptyBoldBbCodeTagsNoStringInside_ShouldFail() throws Exception {
+     public void emptyBoldBbCodeNoStringInside_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic("subject", "[b][/b]");
         Topics.createTopic(topic);
@@ -80,7 +80,7 @@ public class BBCodeTest {
 
     @Test(enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
-    public void twentyThousandAndOneSymbolsInsideBoldBbCodeTags_ShouldFail() throws Exception {
+    public void overMaxLimitTextlength_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
         String newText = randomAlphanumeric(20001);
         Topic topic = new Topic("subject", "[b]" + newText + "[/b]");
