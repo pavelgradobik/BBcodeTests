@@ -32,7 +32,7 @@ public class BBCodeTest {
     
     
     @DataProvider(name = "randomData")
-    public Object[] createData() {
+    public Object[][] createData() {
         return new Object[] {
                 new Object[] {randomAlphanumeric(2)}, // this n1 parameter
                 new Object[] {randomAlphanumeric(7)}, // this n2 parameter
