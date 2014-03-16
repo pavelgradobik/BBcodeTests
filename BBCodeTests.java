@@ -9,6 +9,10 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
@@ -25,25 +29,40 @@ public class BBCodeTest {
         driver.get(appUrl);
         mainPage.logOutIfLoggedIn(driver);
     }
+    
+    
+    @DataProvider(name = "randomData")
+    public Object[] createData() {
+        return new Object[] {
+                new Object[] {randomAlphanumeric(2)}, // this n1 parameter
+                new Object[] {randomAlphanumeric(7)}, // this n2 parameter
+                new Object[] {randomAlphanumeric(20000)}, // this n3 parameter
+                new Object[] {randomAlphanumeric(10)}, // this n4 parameter
+                new Object[] {randomAlphanumeric(20001)} // this n5 parameter
+        };
+    }
+    
+    
+    
     //
     // Bold [b][/b] bb-code coverage
     //
-    @Test
-      public void boldBbCodeWithMinAllowedTextLength_ShouldPass() throws Exception {
+    @Test(dataProvider = "randomData")
+      public void boldBbCodeWithMinAllowedTextLength_ShouldPass(String n1, String n2) throws Exception {  // using n3 and n2 parameters from DataProvider
         Users.signUpAndSignIn();
-        String newSubject = randomAlphanumeric(7);
-        String newText = randomAlphanumeric(2);
-        Topic topic = new Topic(newSubject,"[b]" + newText + "[/b]");
+        // String newSubject = randomAlphanumeric(7);
+        // String newText = randomAlphanumeric(2);
+        Topic topic = new Topic(n2,"[b]" + n1 + "[/b]");
         Topic createdTopic = Topics.createTopic(topic);
         Assert.assertTrue(Topics.isCreated(createdTopic));
     }
 
-    @Test
-    public void boldBbCodeWithMaxAllowedTextLength_ShouldPass() throws Exception {
+    @Test(dataProvider = "randomData")
+    public void boldBbCodeWithMaxAllowedTextLength_ShouldPass(String n2, String n3) throws Exception {
         Users.signUpAndSignIn();
-        String newSubject = randomAlphanumeric(7);
-        String newText = randomAlphanumeric(20000);
-        Topic topic = new Topic(newSubject,"[b]" + newText + "[/b]");
+        // String newSubject = randomAlphanumeric(7);
+        // String newText = randomAlphanumeric(20000);
+        Topic topic = new Topic(n2,"[b]" + n3 + "[/b]");
         Topic createdTopic = Topics.createTopic(topic);
         Assert.assertTrue(Topics.isCreated(createdTopic));
     }
